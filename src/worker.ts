@@ -4,6 +4,7 @@ import { deleteExpiredSessions } from "./lib/session-cleanup.js";
 
 const PORT = 3000;
 app.listen(PORT);
+const worker: ExportedHandler = httpServerHandler({ port: PORT });
 
 async function runSessionCleanup() {
   try {
@@ -16,9 +17,8 @@ async function runSessionCleanup() {
   }
 }
 
-export default {
-  fetch: httpServerHandler({ port: PORT }),
-  async scheduled() {
-    await runSessionCleanup();
-  },
+worker.scheduled = async () => {
+  await runSessionCleanup();
 };
+
+export default worker;
