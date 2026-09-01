@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { eq } from "drizzle-orm";
 import { auth } from "../src/lib/auth.js";
-import { db } from "../src/db/db.js";
+import { db, pool } from "../src/db/db.js";
 import { user } from "../src/db/schema/auth.js";
 
 /**
@@ -51,7 +51,11 @@ const main = async () => {
     console.log(`Created admin account for ${email}`);
 };
 
-main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
-});
+main()
+    .catch((error) => {
+        console.error(error);
+        process.exitCode = 1;
+    })
+    .finally(async () => {
+        await pool.end();
+    });

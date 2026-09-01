@@ -1,5 +1,5 @@
 import express from "express";
-import { randomBytes } from "node:crypto";
+import crypto from "crypto";
 import { and, desc, eq, ilike, sql, type SQL } from "drizzle-orm";
 import { db } from "../src/db/db.js";
 import { classes, invitations, newInvitation } from "../src/db/schema/app.js";
@@ -123,7 +123,7 @@ router.post("/", requireAuth, requireRole("admin", "teacher"), async (req, res) 
             className = classRecord.name;
         }
 
-        const token = Buffer.from(randomBytes(32)).toString("hex");
+        const token = crypto.randomBytes(32).toString("hex");
         const inviteData: newInvitation = {
             email,
             role,

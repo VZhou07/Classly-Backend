@@ -1,9 +1,4 @@
-import arcjet, {
-  shield,
-  detectBot,
-  slidingWindow,
-  cloudflare,
-} from "@arcjet/node";
+import arcjet,{ shield, detectBot, slidingWindow } from "@arcjet/node";
 
 if (!process.env.ARCJET_KEY) {
     throw new Error('ARCJET_KEY is not set in .env file');
@@ -13,7 +8,6 @@ const aj = arcjet({
     // Get your site key from https://app.arcjet.com and set it as an environment
     // variable rather than hard coding.
     key: process.env.ARCJET_KEY,
-    proxies: [cloudflare()],
     rules: [
       // Shield protects your app from common attacks e.g. SQL injection
       shield({ mode: "LIVE" }),

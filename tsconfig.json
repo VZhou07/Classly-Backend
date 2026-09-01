@@ -29,7 +29,7 @@
     "skipLibCheck": true,
 
     /* Environment types */
-    "types": ["node", "@cloudflare/workers-types"]
+    "types": ["node"]
   },
   "include": ["src/**/*.ts", "routes/**/*.ts"]
 }

@@ -68,8 +68,6 @@ web_modules/
 # dotenv environment variable files
 .env
 .env.*
-.dev.vars
-.wrangler-secrets
 
 
 # parcel-bundler cache (https://parceljs.org/)
