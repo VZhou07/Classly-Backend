@@ -7,6 +7,11 @@
     "build": "tsc",
     "start": "node dist/src/index.js",
     "dev": "tsx watch src/index.ts",
+    "cf:dev": "wrangler dev",
+    "cf:login": "wrangler login",
+    "cf:secrets": "node scripts/prepare-wrangler-secrets.mjs && wrangler secret bulk .wrangler-secrets",
+    "cf:update-vercel": "node scripts/update-vercel-proxy.mjs",
+    "deploy": "wrangler deploy",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:demo": "tsx src/crud-demo.ts",
@@ -27,16 +32,16 @@
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
-    "resend": "^6.17.1",
-    "ws": "^8.20.0"
+    "resend": "^6.17.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260831.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
-    "@types/ws": "^8.18.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.36.0"
   }
 }
