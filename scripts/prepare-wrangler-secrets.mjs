@@ -34,16 +34,17 @@ for (const line of lines) {
   if (SKIP_KEYS.has(key)) continue;
 
   let value = trimmed.slice(eq + 1).trim();
-  if (
+  const isQuoted =
     (value.startsWith('"') && value.endsWith('"')) ||
-    (value.startsWith("'") && value.endsWith("'"))
-  ) {
-    value = value.slice(1, -1);
-  }
+    (value.startsWith("'") && value.endsWith("'"));
 
-  const hash = value.indexOf(" #");
-  if (hash !== -1) {
-    value = value.slice(0, hash).trim();
+  if (isQuoted) {
+    value = value.slice(1, -1);
+  } else {
+    const hash = value.indexOf(" #");
+    if (hash !== -1) {
+      value = value.slice(0, hash).trim();
+    }
   }
 
   secrets.push(`${key}=${value}`);

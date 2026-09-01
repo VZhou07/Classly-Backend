@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { eq, and, desc, sql } from "drizzle-orm";
-import { db } from "../db/db.js"; // your drizzle instance
+import { db, transactionDb } from "../db/db.js"; // your drizzle instance
 import * as schema from "../db/schema/index.js";
 import { sendPasswordResetEmail } from "./email.js";
 
@@ -108,7 +108,7 @@ export const auth = betterAuth({
                     };
                 },
                 after: async (user) => {
-                    await db.transaction(async (tx) => {
+                    await transactionDb.transaction(async (tx) => {
                         const [invite] = await tx
                             .select()
                             .from(schema.invitations)
