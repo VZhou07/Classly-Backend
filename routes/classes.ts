@@ -1,4 +1,4 @@
-import { db, transactionDb } from "../src/db/db.js";
+import { db, withTransaction } from "../src/db/db.js";
 import {
   classes,
   enrollments,
@@ -217,7 +217,7 @@ router.post("/join", requireAuth, requireRole("student"), async (req, res) => {
             return res.status(404).json({ message: "Invalid invite code" });
         }
 
-        const result = await transactionDb.transaction(async (tx) => {
+        const result = await withTransaction(async (tx) => {
             const [lockedClass] = await tx
                 .select()
                 .from(classes)

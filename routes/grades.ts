@@ -1,6 +1,6 @@
 import express from "express";
 import { and, eq, inArray, sql } from "drizzle-orm";
-import { db, transactionDb } from "../src/db/db.js";
+import { db, withTransaction } from "../src/db/db.js";
 import { user } from "../src/db/schema/auth.js";
 import { enrollments, gradeItems, studentGrades } from "../src/db/schema/app.js";
 import { requireAuth } from "../src/middleware/auth.js";
@@ -387,7 +387,7 @@ router.put(
         published: update.published,
       }));
 
-      await transactionDb.transaction(async (tx) => {
+      await withTransaction(async (tx) => {
         await tx
           .insert(studentGrades)
           .values(rows)
